@@ -1,6 +1,6 @@
 import express from 'express';
-import { addTwitterClient, getAllTwiterClients } from "../../TwitterService/src/twitter_client/model/twitter_client.model.js";
-import { addTopics, getAllTopics } from "../../TwitterService/src/topics/model/topics.js";
+import { addTwitterClient, getAllTwiterClients } from "../../priotix-twitter/src/twitter_client/model/twitter_client.model.js";
+import { addTopics, getAllTopics } from "../../priotix-twitter/src/topics/model/topics.js";
 
 const router = express.Router();
 
