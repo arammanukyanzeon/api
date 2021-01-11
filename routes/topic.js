@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try {
-        await Topic.add(req.body);
+        await Topic.add(req.body.name);
         res.status(200).json({ message: "Topic Added" });
     } catch (err) {
         res.status(500).json({ message: "Error adding topic", error: err })
