@@ -1,11 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 
 import subjectRouter from './routes/subject.js';
 import topicRouter from './routes/topic.js';
 import twitterClientRouter from './routes/twitter_client.js';
 
-const port = 8082;
+dotenv.config();
+const port = process.env.PORT;
 
 class Server {
     constructor() {
