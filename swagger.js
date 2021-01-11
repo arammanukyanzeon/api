@@ -2,240 +2,307 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export default
-    {
-        "swagger": "2.0",
-        "info": {
-            "version": "1.0.0",
-            "title": "Project Priotix Task",
-
-        },
-        "host": `http://${process.env.TWITTER_SERVICE_ADDRESS}`,
-        "basePath": "/",
-        "tags": [
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Project Priotix Task"
+    },
+    "basePath": "/",
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/subject/{topicId}": {
+        "get": {
+          "tags": [
+            "Subject"
+          ],
+          "summary": "Get all sobjects for topic",
+          "parameters": [
             {
-                "name": "API",
-                "description": "API"
+              "name": "topicId",
+              "in": "path",
+              "required": true,
+              "type": "integer"
             }
-        ],
-        "schemes": [
-            "http"
-        ],
-        "consumes": [
-            "application/json"
-        ],
-        "produces": [
-            "application/json"
-        ],
-        "paths": {
-            "/:topicId": {
-                "get": {
-                    "tags": [
-                        "Subject"
-                    ],
-                    "summary": "Get all sobjects for topic",
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "$ref": "#/definitions/Subject"
-                            }
-                        },
-                        "404": {
-                            "description": "Not found",
-                            "schema": {
-                                "$ref": "#/definitions/Subject"
-                            }
-                        },
-                        "500": {
-                            "description": "Error",
-                            "schema": {
-                                "$ref": "#/definitions/Subject"
-                            }
-                        }
-                    }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Subject"
                 }
+              }
             },
-            "/a": {
-                "post": {
-                    "tags": [
-                        "Topic"
-                    ],
-                    "summary": "Add topic",
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "$ref": "#/definitions/Topic"
-                            }
-                        },
-                        "500": {
-                            "description": "Error",
-                            "schema": {
-                                "$ref": "#/definitions/Topic"
-                            }
-                        }
-                    }
-                }
+            "404": {
+              "description": "Not found",
+              "schema": {
+                "$ref": "#/definitions/Error"
+              }
             },
-            "/b": {
-                "get": {
-                    "tags": [
-                        "Topic"
-                    ],
-                    "summary": "Get active topics",
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "$ref": "#/definitions/Topic"
-                            }
-                        },
-                        "404": {
-                            "description": "Not found",
-                            "schema": {
-                                "$ref": "#/definitions/Subject"
-                            }
-                        },
-                        "500": {
-                            "description": "Error",
-                            "schema": {
-                                "$ref": "#/definitions/Topic"
-                            }
-                        }
-                    }
-                }
+            "500": {
+              "description": "Error",
+              "schema": {
+                "$ref": "#/definitions/Error500"
+              }
+            }
+          }
+        }
+      },
+      "/topic": {
+        "post": {
+          "tags": [
+            "Topic"
+          ],
+          "summary": "Add topic",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Topic"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Success"
+              }
             },
-            "/:id": {
-                "delete": {
-                    "tags": [
-                        "Topic"
-                    ],
-                    "summary": "Delete topic by id",
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "$ref": "#/definitions/Topic"
-                            }
-                        },
-                        "500": {
-                            "description": "Error",
-                            "schema": {
-                                "$ref": "#/definitions/Topic"
-                            }
-                        }
-                    }
-                }
-            },
-            "/c": {
-                "post": {
-                    "tags": [
-                        "Twitter Client"
-                    ],
-                    "summary": "Add twitter client",
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "$ref": "#/definitions/Twitter Client"
-                            }
-                        },
-                        "500": {
-                            "description": "Error",
-                            "schema": {
-                                "$ref": "#/definitions/Twitter Client"
-                            }
-                        }
-                    }
-                }
-            },
-            "/d": {
-                "get": {
-                    "tags": [
-                        "Twitter Client"
-                    ],
-                    "summary": "Get twitter clients",
-                    "responses": {
-                        "200": {
-                            "description": "OK",
-                            "schema": {
-                                "$ref": "#/definitions/Twitter Client"
-                            }
-                        },
-                        "404": {
-                            "description": "Not found",
-                            "schema": {
-                                "$ref": "#/definitions/Twitter Client"
-                            }
-                        },
-                        "500": {
-                            "description": "Error",
-                            "schema": {
-                                "$ref": "#/definitions/Twitter Client"
-                            }
-                        }
-                    }
-                }
-            },
+            "500": {
+              "description": "Error",
+              "schema": {
+                "$ref": "#/definitions/Error500"
+              }
+            }
+          }
         },
-
-
-        "definitions": {
-            "Subject": {
-                "required": [
-                    "topic_id",
-                ],
-                "properties": {
-                    "topic_id": {
-                        "type": "integer",
-                    },
+        "get": {
+          "tags": [
+            "Topic"
+          ],
+          "summary": "Get active topics",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Topic"
                 }
+              }
             },
-            "Topic": {
-                "required": [
-                    "name",
-                    "id",
-                ],
-                "properties": {
-                    "name": {
-                        "type": "string",
-                    },
-                    "id": {
-                        "type": "integer",
-                    },
-                }
+            "404": {
+              "description": "Not found",
+              "schema": {
+                "$ref": "#/definitions/Error"
+              }
             },
-            "Twitter Client": {
-                "required": [
-                    "api_key",
-                    "api_key_secret",
-                    "access_token_key",
-                    "acces_token_secret",
-                    "expire_date",
-                    "limit",
-                ],
-                "properties": {
-                    "api_key": {
-                        "type": "string",
-                    },
-                    "api_key_secret": {
-                        "type": "string",
-                    },
-                    "access_token_key": {
-                        "type": "string",
-                    },
-                    "acces_token_secret": {
-                        "type": "string",
-                    },
-                    "expire_date": {
-                        "type": "string",
-                        "format": "date"
-                    },
-                    "limit": {
-                        "type": "integer",
-                    },
-                }
+            "500": {
+              "description": "Error",
+              "schema": {
+                "$ref": "#/definitions/Error500"
+              }
+            }
+          }
+        }
+      },
+      "/topic/{id}": {
+        "delete": {
+          "tags": [
+            "Topic"
+          ],
+          "summary": "Delete topic by id",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "integer"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Success"
+              }
             },
+            "500": {
+              "description": "Error",
+              "schema": {
+                "$ref": "#/definitions/Error500"
+              }
+            }
+          }
+        }
+      },
+      "/twitter-client": {
+        "post": {
+          "tags": [
+            "Twitter Client"
+          ],
+          "summary": "Add twitter client",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/TwitterClient"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Success"
+              }
+            },
+            "500": {
+              "description": "Error",
+              "schema": {
+                "$ref": "#/definitions/Error500"
+              }
+            }
+          }
         },
-
+        "get": {
+          "tags": [
+            "Twitter Client"
+          ],
+          "summary": "Get twitter clients",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/TwitterClient"
+                }
+              }
+            },
+            "404": {
+              "description": "Not found",
+              "schema": {
+                "$ref": "#/definitions/Error"
+              }
+            },
+            "500": {
+              "description": "Error",
+              "schema": {
+                "$ref": "#/definitions/Error500"
+              }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Success": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Error500": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          }
+        }
+      },
+      "Subject": {
+        "required": [
+          "topic_id"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "topic_id": {
+            "type": "integer"
+          },
+          "term": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date"
+          },
+          "probability": {
+            "type": "number"
+          }
+        }
+      },
+      "Topic": {
+        "required": [
+          "name",
+          "id"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "id": {
+            "type": "integer"
+          }
+        }
+      },
+      "TwitterClient": {
+        "required": [
+          "api_key",
+          "api_key_secret",
+          "access_token_key",
+          "acces_token_secret",
+          "expire_date",
+          "limit"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "api_key": {
+            "type": "string"
+          },
+          "api_key_secret": {
+            "type": "string"
+          },
+          "access_token_key": {
+            "type": "string"
+          },
+          "acces_token_secret": {
+            "type": "string"
+          },
+          "expire_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "limit": {
+            "type": "integer"
+          }
+        }
+      }
     }
+  }
